@@ -1,0 +1,97 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background:
+    radial-gradient(circle at top, rgba(47,107,255,0.13), transparent 28%),
+    linear-gradient(180deg, #0B0D10 0%, #12161C 100%);
+  color: #F5F7FA;
+}
+
+::selection {
+  background: rgba(91,140,255,0.35);
+  color: white;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+a, button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+input,
+textarea {
+  background-clip: padding-box;
+}
+
+.glass {
+  background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(20px);
+}
+
+.grid-mask {
+  background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.07) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+
+.card-premium {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-premium::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(135deg, rgba(91,140,255,0.14), transparent 30%, transparent 70%, rgba(255,255,255,0.06));
+  opacity: 0;
+  transition: opacity 260ms ease;
+  pointer-events: none;
+}
+
+.card-premium:hover::before {
+  opacity: 1;
+}
+
+.btn-primary,
+.btn-secondary,
+.btn-light {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::after,
+.btn-secondary::after,
+.btn-light::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 70%;
+  height: 100%;
+  transform: skewX(-18deg);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+  transition: left 420ms ease;
+}
+
+.btn-primary:hover::after,
+.btn-secondary:hover::after,
+.btn-light:hover::after {
+  left: 140%;
+}
