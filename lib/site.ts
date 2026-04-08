@@ -5,7 +5,7 @@ export const siteConfig = {
   name: "Dexcore",
   shortName: "Dexcore",
   description:
-    "Premium bilingual AI-native agency site for service businesses in Mexico and the United States.",
+    "Premium bilingual operating system for service businesses in Mexico and the United States.",
   url: getSiteUrl(),
   email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "hello@dexcore.com",
   regionTagline: {
@@ -13,11 +13,12 @@ export const siteConfig = {
     es: "Creado en México. Hecho para vender en México y Estados Unidos.",
   },
   keywords: [
-    "AI agency Mexico",
-    "service business automation",
+    "service business operating system",
+    "lead pipeline software",
+    "quote builder",
+    "follow-up tool",
     "Stripe Mexico subscriptions",
-    "bilingual agency website",
-    "lead generation system",
+    "bilingual service business system",
     "Dexcore",
   ],
 };
@@ -143,14 +144,14 @@ export const copy: Record<
     },
     hero: {
       eyebrow: "Created in Mexico • Built for Mexico & the USA",
-      title: "Premium AI systems for real-world service businesses.",
+      title: "Premium operating system for real-world service businesses.",
       subtitle:
-        "Dexcore helps service operators capture, qualify, follow up, and close more leads with a bilingual, professional, conversion-ready system.",
+        "Dexcore helps service operators capture leads, organize pipeline, build quotes, follow up faster, and charge professionally with a bilingual, conversion-ready system.",
       primary: "See launch pricing",
-      secondary: "See pricing",
-      cardTitle: "Operational clarity, not chaos.",
+      secondary: "See features",
+      cardTitle: "Operations without chaos.",
       cardBody:
-        "From the first click to recurring payment, Dexcore gives you a cleaner system that looks serious, sells harder, and starts with launch pricing designed to win early clients.",
+        "From the first click to recurring payment, Dexcore gives service businesses a cleaner system to capture demand, quote faster, follow up harder, and operate with more control.",
     },
     pain: {
       title:
@@ -160,7 +161,7 @@ export const copy: Record<
       bullets: [
         "Leads go cold while the owner is on-site",
         "Teams answer in different ways and miss details",
-        "No consistent path from inquiry to payment",
+        "Quotes are made manually and follow-up is inconsistent",
         "Most websites look okay but sell poorly",
       ],
     },
@@ -169,28 +170,28 @@ export const copy: Record<
       steps: [
         {
           title: "Capture",
-          body: "Drive traffic to a premium bilingual site with stronger trust, cleaner messaging, and better conversion structure.",
+          body: "Bring traffic into a cleaner bilingual site with stronger trust, better structure, and better lead capture.",
         },
         {
-          title: "Qualify",
-          body: "Filter incoming leads with a smarter form so you get better information before wasting time.",
+          title: "Organize",
+          body: "Move each lead through a visible pipeline so the business always knows what is new, quoted, or ready for follow-up.",
         },
         {
-          title: "Automate",
-          body: "Route follow-ups, billing flows, and contact requests through cleaner operations and Stripe-powered payments.",
+          title: "Quote",
+          body: "Build a fast quote inside the workspace and keep the lead tied to the amount and service details.",
         },
         {
-          title: "Close",
-          body: "Convert more demand with a stronger offer, better speed, and a system clients can actually trust.",
+          title: "Follow up",
+          body: "Generate the next message, keep control of progress, and manage billing without needing scattered tools.",
         },
       ],
     },
     features: {
       title:
-        "Built for operators who need a site that performs, not just one that exists.",
+        "Built for operators who need a system that performs, not just a site that exists.",
       items: [
         {
-          title: "Bilingual UX",
+          title: "Bilingual experience",
           body: "Serve English and Spanish audiences with one polished interface.",
         },
         {
@@ -198,20 +199,20 @@ export const copy: Record<
           body: "Display and sell in USD and MXN with a simple switch.",
         },
         {
+          title: "Lead pipeline workspace",
+          body: "Move leads by stage and keep daily operations more organized.",
+        },
+        {
+          title: "Quote builder",
+          body: "Prepare faster quotes with totals, extras, travel, rush, and tax.",
+        },
+        {
+          title: "Follow-up engine",
+          body: "Generate professional next-step messages that are ready to copy and send.",
+        },
+        {
           title: "Stripe subscriptions",
-          body: "Charge recurring plans securely with checkout and customer portal support.",
-        },
-        {
-          title: "SEO-ready structure",
-          body: "Metadata, schema, robots, sitemap, Open Graph, and clean page hierarchy.",
-        },
-        {
-          title: "Cookie compliance",
-          body: "Consent banner with stored preferences and privacy disclosure.",
-        },
-        {
-          title: "Professional motion",
-          body: "Subtle, premium animations that add polish without looking gimmicky.",
+          body: "Charge recurring plans securely with checkout and billing portal support.",
         },
       ],
     },
@@ -252,7 +253,7 @@ export const copy: Record<
         },
         {
           q: "What happens right after checkout?",
-          a: "The customer lands on a success page, can complete onboarding, and can use the client portal or billing portal without waiting for manual confirmation.",
+          a: "The customer is sent directly into the workspace to start using the tool immediately. Billing and optional setup remain available without blocking access.",
         },
         {
           q: "Can I use my own Stripe Mexico account?",
@@ -260,25 +261,25 @@ export const copy: Record<
         },
         {
           q: "Is this only a landing page?",
-          a: "No. It is a conversion-ready front-end system with legal pages, consent flows, contact API scaffolding, and payment endpoints.",
+          a: "No. It is a conversion-ready front-end system with a workspace, billing access, legal pages, consent flows, contact API scaffolding, and payment endpoints.",
         },
       ],
     },
     finalCta: {
-      title: "Launch a system that looks premium and closes harder.",
+      title: "Need help, support, or a custom rollout?",
       subtitle:
-        "Dexcore is designed to feel serious from the first second and convert across Mexico and the United States.",
-      primary: "Launch Dexcore",
+        "Dexcore is built for autoservice, but you can still contact us if you want help with setup, niche adaptation, or launch questions.",
+      primary: "Contact Dexcore",
       secondary: "Manage Billing",
     },
     form: {
-      title: "Tell Dexcore about your business",
+      title: "Request support or a custom rollout",
       name: "Name",
       email: "Email",
       company: "Company",
       region: "Region",
       service: "Primary service",
-      message: "What do you need?",
+      message: "What do you need help with?",
       submit: "Send Request",
       sending: "Sending...",
       success: "Thanks. Your request was sent successfully.",
@@ -290,7 +291,7 @@ export const copy: Record<
         company: "Dexcore Services",
         service: "Camera installation",
         message:
-          "We need a premium bilingual website with subscriptions and better lead flow.",
+          "We need help adapting Dexcore to our niche, pricing, or launch setup.",
       },
     },
     footer: {
@@ -336,14 +337,14 @@ export const copy: Record<
     },
     hero: {
       eyebrow: "Creado en México • Hecho para México y USA",
-      title: "Sistemas premium con IA para negocios de servicios reales.",
+      title: "Sistema operativo premium para negocios de servicios reales.",
       subtitle:
-        "Dexcore ayuda a negocios de servicios a captar, calificar, dar seguimiento y cerrar más leads con un sistema bilingüe, profesional y listo para convertir.",
+        "Dexcore ayuda a negocios de servicios a captar leads, organizar pipeline, cotizar más rápido, dar seguimiento mejor y cobrar de forma profesional con un sistema bilingüe listo para convertir.",
       primary: "Ver precios de lanzamiento",
       secondary: "Ver funciones",
-      cardTitle: "Claridad operativa, no caos.",
+      cardTitle: "Operación sin caos.",
       cardBody:
-        "Desde el primer clic hasta el pago recurrente, Dexcore te da un sistema más limpio, más serio y más vendedor, con precios de lanzamiento pensados para cerrar más rápido.",
+        "Desde el primer clic hasta el pago recurrente, Dexcore le da a negocios de servicios un sistema más limpio para captar demanda, cotizar más rápido, dar seguimiento más duro y operar con más control.",
     },
     pain: {
       title:
@@ -353,7 +354,7 @@ export const copy: Record<
       bullets: [
         "Los leads se enfrían mientras el dueño anda en campo",
         "El equipo responde diferente y se les van detalles",
-        "No existe un camino consistente desde la consulta hasta el pago",
+        "Las cotizaciones se hacen a mano y el seguimiento es inconsistente",
         "Muchos sitios se ven decentes, pero venden mal",
       ],
     },
@@ -362,28 +363,28 @@ export const copy: Record<
       steps: [
         {
           title: "Captura",
-          body: "Lleva tráfico a un sitio premium bilingüe con más confianza, mejor mensaje y mejor estructura de conversión.",
+          body: "Lleva tráfico a un sitio bilingüe más limpio, con mejor confianza, mejor estructura y mejor captura de leads.",
         },
         {
-          title: "Califica",
-          body: "Filtra leads con un formulario más inteligente para obtener mejor información antes de perder tiempo.",
+          title: "Organiza",
+          body: "Mueve cada lead por un pipeline visible para saber siempre qué está nuevo, cotizado o listo para seguimiento.",
         },
         {
-          title: "Automatiza",
-          body: "Mueve seguimientos, cobros y solicitudes de contacto con operaciones más limpias y pagos con Stripe.",
+          title: "Cotiza",
+          body: "Arma cotizaciones rápidas dentro del workspace y deja el lead ligado al monto y a los detalles del servicio.",
         },
         {
-          title: "Cierra",
-          body: "Convierte más demanda con una oferta más fuerte, mejor velocidad y un sistema en el que sí confían.",
+          title: "Da seguimiento",
+          body: "Genera el siguiente mensaje, conserva control del avance y administra cobros sin depender de herramientas sueltas.",
         },
       ],
     },
     features: {
       title:
-        "Hecho para operadores que necesitan un sitio que funcione, no uno que solo exista.",
+        "Hecho para operadores que necesitan un sistema que funcione, no solo un sitio que exista.",
       items: [
         {
-          title: "UX bilingüe",
+          title: "Experiencia bilingüe",
           body: "Atiende audiencias en inglés y español con una sola interfaz pulida.",
         },
         {
@@ -391,20 +392,20 @@ export const copy: Record<
           body: "Muestra y vende en USD y MXN con un switch simple.",
         },
         {
+          title: "Workspace con pipeline",
+          body: "Mueve leads por etapa y organiza mejor la operación diaria.",
+        },
+        {
+          title: "Cotizador rápido",
+          body: "Prepara cotizaciones más rápido con totales, extras, viáticos, urgencia e impuesto.",
+        },
+        {
+          title: "Motor de seguimiento",
+          body: "Genera mensajes profesionales listos para copiar y enviar.",
+        },
+        {
           title: "Suscripciones con Stripe",
-          body: "Cobra planes recurrentes de forma segura con checkout y portal de clientes.",
-        },
-        {
-          title: "Estructura SEO lista",
-          body: "Metadata, schema, robots, sitemap, Open Graph y jerarquía limpia.",
-        },
-        {
-          title: "Cumplimiento de cookies",
-          body: "Banner de consentimiento con preferencias guardadas y aviso de privacidad.",
-        },
-        {
-          title: "Animación profesional",
-          body: "Animaciones sutiles y premium que elevan el sitio sin verse exageradas.",
+          body: "Cobra planes recurrentes de forma segura con checkout y portal de facturación.",
         },
       ],
     },
@@ -444,30 +445,34 @@ export const copy: Record<
           a: "Sí. Ya trae rutas base para Stripe Checkout y Billing Portal orientadas a suscripciones.",
         },
         {
+          q: "¿Qué pasa justo después del checkout?",
+          a: "El cliente entra directo al workspace para usar la herramienta de inmediato. La facturación y el setup opcional siguen disponibles sin bloquear el acceso.",
+        },
+        {
           q: "¿Puedo usar mi cuenta de Stripe México?",
           a: "Sí. Solo agrega tus llaves live y tu webhook secret en variables de entorno y despliega.",
         },
         {
           q: "¿Es solo una landing?",
-          a: "No. Es un sistema front-end listo para conversión con legales, cookies, API de contacto y endpoints de pago.",
+          a: "No. Es un sistema listo para conversión con workspace, acceso a billing, legales, cookies, API de contacto y endpoints de pago.",
         },
       ],
     },
     finalCta: {
-      title: "Lanza un sistema que se vea premium y cierre más duro.",
+      title: "¿Necesitas ayuda, soporte o un rollout personalizado?",
       subtitle:
-        "Dexcore está diseñado para verse serio desde el primer segundo y convertir tanto en México como en Estados Unidos.",
-      primary: "Lanzar Dexcore",
+        "Dexcore está hecho para autoservicio, pero también puedes contactarnos si quieres ayuda con setup, adaptación a tu nicho o dudas de lanzamiento.",
+      primary: "Contactar a Dexcore",
       secondary: "Administrar facturación",
     },
     form: {
-      title: "Cuéntale a Dexcore sobre tu negocio",
+      title: "Solicita soporte o un rollout personalizado",
       name: "Nombre",
       email: "Correo",
       company: "Empresa",
       region: "Región",
       service: "Servicio principal",
-      message: "¿Qué necesitas?",
+      message: "¿Con qué necesitas ayuda?",
       submit: "Enviar solicitud",
       sending: "Enviando...",
       success: "Gracias. Tu solicitud fue enviada correctamente.",
@@ -479,7 +484,7 @@ export const copy: Record<
         company: "Dexcore Services",
         service: "Instalación de cámaras",
         message:
-          "Necesitamos un sitio premium bilingüe con suscripciones y mejor flujo de leads.",
+          "Necesitamos ayuda para adaptar Dexcore a nuestro nicho, precios o lanzamiento.",
       },
     },
     footer: {

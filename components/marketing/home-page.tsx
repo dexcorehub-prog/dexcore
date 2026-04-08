@@ -45,18 +45,19 @@ export function HomePage() {
     ShieldCheck,
     Sparkles,
   ];
+
   const heroHighlights = isSpanish
     ? [
-        "Experiencia bilingüe",
+        "Pipeline de leads",
+        "Cotizador rápido",
+        "Seguimiento listo para copiar",
         "Cobros con Stripe",
-        "SEO, legales y cookies",
-        "Hecho para México y USA",
       ]
     : [
-        "Bilingual website experience",
-        "Subscription billing with Stripe",
-        "SEO, legal, and cookies included",
-        "Designed for Mexico and the USA",
+        "Lead pipeline workspace",
+        "Fast quote builder",
+        "Follow-up ready to copy",
+        "Stripe-powered billing",
       ];
 
   async function handleCheckout(planId: string) {
@@ -135,8 +136,8 @@ export function HomePage() {
       icon: TimerReset,
       value: "< 60 sec",
       label: isSpanish
-        ? "para dar mejor primera impresión"
-        : "to make a stronger first impression",
+        ? "para empezar a trabajar un lead"
+        : "to start working a lead",
     },
     {
       icon: BadgeCheck,
@@ -151,7 +152,9 @@ export function HomePage() {
     {
       icon: Lock,
       value: isSpanish ? "1 sistema" : "1 system",
-      label: isSpanish ? "sitio + cobros + legales" : "site + billing + legal",
+      label: isSpanish
+        ? "pipeline + cotización + cobro"
+        : "pipeline + quoting + billing",
     },
   ];
 
@@ -210,7 +213,7 @@ export function HomePage() {
                 { icon: CircleDollarSign, label: "USD / MXN" },
                 {
                   icon: Workflow,
-                  label: isSpanish ? "Cobro activo" : "Stripe ready",
+                  label: isSpanish ? "Herramienta lista" : "Workspace ready",
                 },
               ].map((item, index) => (
                 <motion.div
@@ -289,8 +292,8 @@ export function HomePage() {
                     "Next.js",
                     "TypeScript",
                     "Stripe",
-                    "SEO",
-                    isSpanish ? "Animación" : "Motion",
+                    isSpanish ? "Pipeline" : "Pipeline",
+                    isSpanish ? "Cotizador" : "Quote builder",
                     isSpanish ? "Bilingüe" : "Bilingual",
                   ].map((tag) => (
                     <span
@@ -647,7 +650,7 @@ export function HomePage() {
             className="hidden lg:block"
           >
             <div className="text-xs uppercase tracking-[0.26em] text-white/40">
-              {isSpanish ? "lanzamiento" : "Launch"}
+              {isSpanish ? "soporte" : "Support"}
             </div>
             <h2 className="mt-4 text-3xl font-black tracking-tight sm:text-4xl">
               {t.finalCta.title}
