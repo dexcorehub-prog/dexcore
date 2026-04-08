@@ -1,7 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  type ReactNode,
+} from "react";
 import { Menu, X, Globe2, BadgeDollarSign, ChevronDown } from "lucide-react";
 import { copy, siteConfig } from "@/lib/site";
 import type { Currency, Locale } from "@/lib/plans";
@@ -26,14 +33,15 @@ type SiteContextValue = {
 const defaultConsent: ConsentState = {
   essential: true,
   analytics: false,
-  marketing: false
+  marketing: false,
 };
 
 const SiteContext = createContext<SiteContextValue | null>(null);
 
 export function useSitePreferences() {
   const context = useContext(SiteContext);
-  if (!context) throw new Error("useSitePreferences must be used inside SiteProvider");
+  if (!context)
+    throw new Error("useSitePreferences must be used inside SiteProvider");
   return context;
 }
 
@@ -43,19 +51,24 @@ export function SiteProvider({ children }: { children: ReactNode }) {
   const [consent, setConsent] = useState<ConsentState>(defaultConsent);
 
   useEffect(() => {
-    const savedLocale = window.localStorage.getItem("dexcore-locale") as Locale | null;
-    const savedCurrency = window.localStorage.getItem("dexcore-currency") as Currency | null;
+    const savedLocale = window.localStorage.getItem(
+      "dexcore-locale",
+    ) as Locale | null;
+    const savedCurrency = window.localStorage.getItem(
+      "dexcore-currency",
+    ) as Currency | null;
     const savedConsent = window.localStorage.getItem("dexcore-consent");
 
     if (savedLocale === "en" || savedLocale === "es") setLocale(savedLocale);
-    if (savedCurrency === "usd" || savedCurrency === "mxn") setCurrency(savedCurrency);
+    if (savedCurrency === "usd" || savedCurrency === "mxn")
+      setCurrency(savedCurrency);
     if (savedConsent) {
       try {
         const parsed = JSON.parse(savedConsent) as ConsentState;
         setConsent({
           essential: true,
           analytics: Boolean(parsed.analytics),
-          marketing: Boolean(parsed.marketing)
+          marketing: Boolean(parsed.marketing),
         });
       } catch {
         setConsent(defaultConsent);
@@ -77,7 +90,7 @@ export function SiteProvider({ children }: { children: ReactNode }) {
 
   const value = useMemo(
     () => ({ locale, currency, setLocale, setCurrency, consent, setConsent }),
-    [locale, currency, consent]
+    [locale, currency, consent],
   );
 
   return (
@@ -97,7 +110,7 @@ function Shell({ children }: { children: ReactNode }) {
     { href: "#features", label: t.nav.features },
     { href: "#process", label: t.nav.process },
     { href: "#pricing", label: t.nav.pricing },
-    { href: "#faq", label: t.nav.faq }
+    { href: "#faq", label: t.nav.faq },
   ];
 
   return (
@@ -107,18 +120,26 @@ function Shell({ children }: { children: ReactNode }) {
           <Link href="/" className="group flex items-center gap-3">
             <div className="relative flex size-10 items-center justify-center rounded-2xl border border-brand/30 bg-white/[0.04] shadow-soft">
               <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-brand/35 to-white/10 opacity-70 transition-opacity group-hover:opacity-100" />
-              <span className="relative text-lg font-black tracking-tight">D</span>
+              <span className="relative text-lg font-black tracking-tight">
+                D
+              </span>
             </div>
             <div>
               <div className="text-base font-bold tracking-tight">Dexcore</div>
-              <div className="text-xs text-muted">{siteConfig.regionTagline[locale]}</div>
+              <div className="text-xs text-muted">
+                {siteConfig.regionTagline[locale]}
+              </div>
             </div>
           </Link>
 
           <div className="hidden items-center gap-6 lg:flex">
             <nav className="flex items-center gap-6 text-sm text-muted">
               {navItems.map((item) => (
-                <a key={item.href} href={item.href} className="transition hover:text-white">
+                <a
+                  key={item.href}
+                  href={item.href}
+                  className="transition hover:text-white"
+                >
                   {item.label}
                 </a>
               ))}
@@ -138,7 +159,7 @@ function Shell({ children }: { children: ReactNode }) {
             />
 
             <a
-              href="#contact"
+              href="#pricing"
               className="rounded-full border border-brand/40 bg-brand px-5 py-2 text-sm font-semibold text-white shadow-glow transition hover:-translate-y-0.5 hover:bg-[#255cf0]"
             >
               {t.nav.cta}
@@ -168,10 +189,18 @@ function Shell({ children }: { children: ReactNode }) {
                     {item.label}
                   </a>
                 ))}
-                <Link href="/billing" onClick={() => setMenuOpen(false)} className="text-sm text-muted transition hover:text-white">
+                <Link
+                  href="/billing"
+                  onClick={() => setMenuOpen(false)}
+                  className="text-sm text-muted transition hover:text-white"
+                >
                   {t.nav.billing}
                 </Link>
-                <Link href="/portal" onClick={() => setMenuOpen(false)} className="text-sm text-muted transition hover:text-white">
+                <Link
+                  href="/portal"
+                  onClick={() => setMenuOpen(false)}
+                  className="text-sm text-muted transition hover:text-white"
+                >
                   Portal
                 </Link>
               </div>
@@ -182,7 +211,7 @@ function Shell({ children }: { children: ReactNode }) {
                 setCurrency={setCurrency}
               />
               <a
-                href="#contact"
+                href="#pricing"
                 onClick={() => setMenuOpen(false)}
                 className="block rounded-full border border-brand/40 bg-brand px-5 py-3 text-center text-sm font-semibold text-white shadow-glow"
               >
@@ -208,9 +237,14 @@ function Shell({ children }: { children: ReactNode }) {
           </div>
 
           <div>
-            <div className="text-sm font-semibold uppercase tracking-[0.24em] text-white/60">Legal</div>
+            <div className="text-sm font-semibold uppercase tracking-[0.24em] text-white/60">
+              Legal
+            </div>
             <div className="mt-4 flex flex-col gap-3 text-sm text-muted">
-              <Link href="/legal/privacy" className="transition hover:text-white">
+              <Link
+                href="/legal/privacy"
+                className="transition hover:text-white"
+              >
                 {copy[locale].footer.privacy}
               </Link>
               <Link href="/legal/terms" className="transition hover:text-white">
@@ -226,13 +260,20 @@ function Shell({ children }: { children: ReactNode }) {
           </div>
 
           <div>
-            <div className="text-sm font-semibold uppercase tracking-[0.24em] text-white/60">Contact</div>
+            <div className="text-sm font-semibold uppercase tracking-[0.24em] text-white/60">
+              Contact
+            </div>
             <div className="mt-4 flex flex-col gap-3 text-sm text-muted">
-              <a href={`mailto:${siteConfig.email}`} className="transition hover:text-white">
+              <a
+                href={`mailto:${siteConfig.email}`}
+                className="transition hover:text-white"
+              >
                 {siteConfig.email}
               </a>
               <span>USD + MXN subscriptions</span>
-              <span>{new Date().getFullYear()} Dexcore. {copy[locale].footer.rights}</span>
+              <span>
+                {new Date().getFullYear()} Dexcore. {copy[locale].footer.rights}
+              </span>
             </div>
           </div>
         </div>
@@ -248,7 +289,12 @@ type PreferenceSwitchProps = {
   setCurrency: (currency: Currency) => void;
 };
 
-function PreferenceSwitch({ locale, currency, setLocale, setCurrency }: PreferenceSwitchProps) {
+function PreferenceSwitch({
+  locale,
+  currency,
+  setLocale,
+  setCurrency,
+}: PreferenceSwitchProps) {
   return (
     <div className="flex flex-wrap items-center gap-2">
       <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] p-1">
@@ -257,7 +303,9 @@ function PreferenceSwitch({ locale, currency, setLocale, setCurrency }: Preferen
           onClick={() => setLocale("en")}
           className={cn(
             "inline-flex items-center gap-2 rounded-full px-3 py-2 text-xs font-semibold transition",
-            locale === "en" ? "bg-white text-black" : "text-muted hover:text-white"
+            locale === "en"
+              ? "bg-white text-black"
+              : "text-muted hover:text-white",
           )}
         >
           <Globe2 size={14} />
@@ -268,7 +316,9 @@ function PreferenceSwitch({ locale, currency, setLocale, setCurrency }: Preferen
           onClick={() => setLocale("es")}
           className={cn(
             "inline-flex items-center gap-2 rounded-full px-3 py-2 text-xs font-semibold transition",
-            locale === "es" ? "bg-white text-black" : "text-muted hover:text-white"
+            locale === "es"
+              ? "bg-white text-black"
+              : "text-muted hover:text-white",
           )}
         >
           <Globe2 size={14} />
@@ -282,7 +332,9 @@ function PreferenceSwitch({ locale, currency, setLocale, setCurrency }: Preferen
           onClick={() => setCurrency("usd")}
           className={cn(
             "inline-flex items-center gap-2 rounded-full px-3 py-2 text-xs font-semibold transition",
-            currency === "usd" ? "bg-brand text-white" : "text-muted hover:text-white"
+            currency === "usd"
+              ? "bg-brand text-white"
+              : "text-muted hover:text-white",
           )}
         >
           <BadgeDollarSign size={14} />
@@ -293,7 +345,9 @@ function PreferenceSwitch({ locale, currency, setLocale, setCurrency }: Preferen
           onClick={() => setCurrency("mxn")}
           className={cn(
             "inline-flex items-center gap-2 rounded-full px-3 py-2 text-xs font-semibold transition",
-            currency === "mxn" ? "bg-brand text-white" : "text-muted hover:text-white"
+            currency === "mxn"
+              ? "bg-brand text-white"
+              : "text-muted hover:text-white",
           )}
         >
           <ChevronDown size={14} />
