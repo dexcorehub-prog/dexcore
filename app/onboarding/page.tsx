@@ -51,7 +51,7 @@ export default function OnboardingPage() {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [feedback, setFeedback] = useState<string | null>(null);
-  const [portalUrl, setPortalUrl] = useState<string | null>(null);
+  const [workspaceUrl, setWorkspaceUrl] = useState<string | null>(null);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -78,11 +78,8 @@ export default function OnboardingPage() {
         const data = (await response.json()) as SessionSummary & {
           error?: string;
         };
-
-        if (!response.ok) {
+        if (!response.ok)
           throw new Error(data.error || "Unable to load session details.");
-        }
-
         if (cancelled) return;
 
         setSession(data);
@@ -107,7 +104,6 @@ export default function OnboardingPage() {
     }
 
     void loadSession();
-
     return () => {
       cancelled = true;
     };
@@ -116,8 +112,8 @@ export default function OnboardingPage() {
   const headerTitle = useMemo(
     () =>
       isSpanish
-        ? "Activa tu espacio de trabajo en 3 minutos"
-        : "Activate your workspace in 3 minutes",
+        ? "Configuración opcional del negocio"
+        : "Optional business setup",
     [isSpanish],
   );
 
@@ -139,29 +135,36 @@ export default function OnboardingPage() {
       const data = (await response.json()) as {
         success?: boolean;
         error?: string;
-        portalUrl?: string;
+        workspaceUrl?: string;
+        warnings?: string[];
       };
 
       if (!response.ok || !data.success) {
-        throw new Error(data.error || "Unable to complete onboarding.");
+        throw new Error(data.error || "Unable to save business setup.");
       }
 
-      setPortalUrl(data.portalUrl || null);
+      setWorkspaceUrl(data.workspaceUrl || null);
       setFeedback(
         isSpanish
-          ? "Listo. Tu onboarding quedó guardado y Dexcore ya tiene tus datos operativos."
-          : "Done. Your onboarding is saved and Dexcore now has your operating details.",
+          ? "Listo. Guardamos tu configuración del negocio. Tu espacio ya estaba activo; esto solo mejora cómo trabaja Dexcore para ti."
+          : "Done. We saved your business setup. Your workspace was already active; this simply helps Dexcore work better for you.",
       );
     } catch (error) {
       setFeedback(
         error instanceof Error
           ? error.message
-          : "Unable to complete onboarding.",
+          : "Unable to save business setup.",
       );
     } finally {
       setSubmitting(false);
     }
   }
+
+  const workspaceHref =
+    workspaceUrl ||
+    (sessionId
+      ? `/workspace?session_id=${encodeURIComponent(sessionId)}`
+      : "/workspace");
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-28 sm:px-6 lg:px-8">
@@ -170,35 +173,33 @@ export default function OnboardingPage() {
           <div className="flex size-14 items-center justify-center rounded-2xl border border-brand/25 bg-brand/10">
             <ClipboardList className="text-brand" size={22} />
           </div>
-
           <h1 className="mt-6 text-4xl font-black tracking-tight">
             {headerTitle}
           </h1>
-
           <p className="mt-4 max-w-xl text-base leading-8 text-muted">
             {isSpanish
-              ? "Después del pago, este paso termina la activación. Guardamos tus datos en Stripe para que Dexcore tenga el plan, el negocio y el estado del onboarding listos sin depender de mensajes sueltos."
-              : "After payment, this is the activation step. We save your details in Stripe so Dexcore has your plan, business, and onboarding status ready without depending on scattered messages."}
+              ? "Dexcore ya está activo. Esta pantalla es opcional y solo sirve para guardar datos del negocio, servicio, zona y metas para personalizar mejor la experiencia."
+              : "Dexcore is already active. This screen is optional and only helps save your business, service, area, and goals so the experience can be more tailored."}
           </p>
 
           <div className="mt-8 space-y-3 text-sm text-white/85">
             <p>
               •{" "}
               {isSpanish
-                ? "Se enlaza con la suscripción real que ya pagaste"
-                : "It links to the real subscription you already paid for"}
+                ? "Tu herramienta ya se puede usar"
+                : "Your tool is already usable"}
             </p>
             <p>
               •{" "}
               {isSpanish
-                ? "Marca onboarding como completo"
-                : "Marks onboarding as complete"}
+                ? "Esto no bloquea el acceso"
+                : "This does not block access"}
             </p>
             <p>
               •{" "}
               {isSpanish
-                ? "Envía resumen al correo operativo si está configurado"
-                : "Sends a summary to the ops inbox if configured"}
+                ? "Puedes volver después si quieres"
+                : "You can come back later if you want"}
             </p>
           </div>
 
@@ -216,27 +217,26 @@ export default function OnboardingPage() {
                   : "loading"
                 : session?.onboardingStatus === "completed"
                   ? isSpanish
-                    ? "completo"
-                    : "complete"
+                    ? "guardado"
+                    : "saved"
                   : isSpanish
-                    ? "pendiente"
-                    : "pending"}
+                    ? "opcional"
+                    : "optional"}
             </div>
           </div>
 
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
+              href={workspaceHref}
+              className="rounded-full border border-white/10 bg-white/[0.03] px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-1 hover:bg-white/[0.08]"
+            >
+              {isSpanish ? "Ir al espacio de trabajo" : "Open workspace"}
+            </Link>
+            <Link
               href="/billing"
               className="rounded-full border border-white/10 bg-white/[0.03] px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-1 hover:bg-white/[0.08]"
             >
               {isSpanish ? "Facturación" : "Billing"}
-            </Link>
-
-            <Link
-              href="/portal"
-              className="rounded-full border border-white/10 bg-white/[0.03] px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-1 hover:bg-white/[0.08]"
-            >
-              {isSpanish ? "Portal del cliente" : "Client portal"}
             </Link>
           </div>
         </div>
@@ -245,8 +245,8 @@ export default function OnboardingPage() {
           {!loading && !sessionId && (
             <div className="mb-6 rounded-[22px] border border-amber-400/20 bg-amber-400/10 p-4 text-sm text-amber-200">
               {isSpanish
-                ? "No encontramos un session_id válido. Vuelve desde la pantalla de pago o success para completar tu onboarding."
-                : "We could not find a valid session_id. Please return from the payment or success screen to complete your onboarding."}
+                ? "No encontramos un session_id válido. Puedes usar Dexcore desde tu espacio de trabajo y volver a esta pantalla después si quieres guardar datos del negocio."
+                : "We could not find a valid session_id. You can use Dexcore from your workspace and return to this screen later if you want to save business details."}
             </div>
           )}
 
@@ -258,7 +258,6 @@ export default function OnboardingPage() {
                 onChange={(value) =>
                   setForm((current) => ({ ...current, contactName: value }))
                 }
-                required
               />
               <Input
                 label={isSpanish ? "Empresa" : "Company"}
@@ -266,7 +265,6 @@ export default function OnboardingPage() {
                 onChange={(value) =>
                   setForm((current) => ({ ...current, companyName: value }))
                 }
-                required
               />
             </div>
 
@@ -278,7 +276,6 @@ export default function OnboardingPage() {
                 onChange={(value) =>
                   setForm((current) => ({ ...current, email: value }))
                 }
-                required
               />
               <Input
                 label={isSpanish ? "Teléfono" : "Phone"}
@@ -304,7 +301,6 @@ export default function OnboardingPage() {
                 onChange={(value) =>
                   setForm((current) => ({ ...current, serviceType: value }))
                 }
-                required
               />
             </div>
 
@@ -315,7 +311,6 @@ export default function OnboardingPage() {
                 onChange={(value) =>
                   setForm((current) => ({ ...current, serviceArea: value }))
                 }
-                required
               />
               <Input
                 label={
@@ -340,14 +335,12 @@ export default function OnboardingPage() {
               onChange={(value) =>
                 setForm((current) => ({ ...current, goals: value }))
               }
-              required
               placeholder={
                 isSpanish
-                  ? "Ejemplo: quiero más citas agendadas y responder más rápido."
-                  : "Example: I want more booked calls and faster lead response."
+                  ? "Ejemplo: quiero responder más rápido y mandar cotizaciones mejores."
+                  : "Example: I want faster lead response and better quotes."
               }
             />
-
             <Textarea
               label={isSpanish ? "Notas adicionales" : "Additional notes"}
               value={form.notes}
@@ -371,8 +364,8 @@ export default function OnboardingPage() {
                   ? "Guardando..."
                   : "Saving..."
                 : isSpanish
-                  ? "Completar onboarding"
-                  : "Complete onboarding"}
+                  ? "Guardar configuración"
+                  : "Save business setup"}
               <ArrowRight size={16} />
             </button>
           </form>
@@ -383,20 +376,15 @@ export default function OnboardingPage() {
                 <CheckCircle2 className="text-brand" size={16} />
                 {feedback}
               </div>
-
-              {portalUrl && (
-                <a
-                  href={portalUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-brand"
-                >
-                  {isSpanish
-                    ? "Abrir portal del cliente"
-                    : "Open client portal"}
-                  <ArrowRight size={16} />
-                </a>
-              )}
+              <Link
+                href={workspaceHref}
+                className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-brand"
+              >
+                {isSpanish
+                  ? "Volver al espacio de trabajo"
+                  : "Back to workspace"}
+                <ArrowRight size={16} />
+              </Link>
             </div>
           )}
         </div>
@@ -410,14 +398,12 @@ function Input({
   value,
   onChange,
   type = "text",
-  required = false,
   placeholder,
 }: {
   label: string;
   value: string;
   onChange: (value: string) => void;
   type?: string;
-  required?: boolean;
   placeholder?: string;
 }) {
   return (
@@ -427,7 +413,6 @@ function Input({
         type={type}
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        required={required}
         placeholder={placeholder}
         className="rounded-[22px] border border-white/10 bg-white/[0.03] px-4 py-4 text-sm text-white placeholder:text-white/30 outline-none transition focus:border-brand/40 focus:ring-2 focus:ring-brand/20"
       />
@@ -439,13 +424,11 @@ function Textarea({
   label,
   value,
   onChange,
-  required = false,
   placeholder,
 }: {
   label: string;
   value: string;
   onChange: (value: string) => void;
-  required?: boolean;
   placeholder?: string;
 }) {
   return (
@@ -454,7 +437,6 @@ function Textarea({
       <textarea
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        required={required}
         placeholder={placeholder}
         rows={5}
         className="rounded-[22px] border border-white/10 bg-white/[0.03] px-4 py-4 text-sm text-white placeholder:text-white/30 outline-none transition focus:border-brand/40 focus:ring-2 focus:ring-brand/20"

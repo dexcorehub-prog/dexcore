@@ -71,11 +71,8 @@ export default function ClientPortalPage() {
       const data = (await response.json()) as CustomerStatus & {
         error?: string;
       };
-
-      if (!response.ok) {
+      if (!response.ok)
         throw new Error(data.error || "Unable to find customer status.");
-      }
-
       setStatus(data);
     } catch (error) {
       setStatus(null);
@@ -91,23 +88,17 @@ export default function ClientPortalPage() {
 
   async function openBilling() {
     if (!status?.email) return;
-
     setPortalLoading(true);
     setFeedback(null);
-
     try {
       const response = await fetch("/api/create-portal-session", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: status.email }),
       });
-
       const data = (await response.json()) as { url?: string; error?: string };
-
-      if (!response.ok || !data.url) {
+      if (!response.ok || !data.url)
         throw new Error(data.error || "Unable to open billing portal.");
-      }
-
       window.location.href = data.url;
     } catch (error) {
       setFeedback(
@@ -135,6 +126,11 @@ export default function ClientPortalPage() {
     return `/onboarding?session_id=${encodeURIComponent(status.latestSessionId)}`;
   }, [status?.latestSessionId]);
 
+  const workspaceHref = useMemo(() => {
+    if (!status?.latestSessionId) return "/workspace";
+    return `/workspace?session_id=${encodeURIComponent(status.latestSessionId)}`;
+  }, [status?.latestSessionId]);
+
   return (
     <div className="mx-auto max-w-6xl px-4 py-28 sm:px-6 lg:px-8">
       <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
@@ -142,17 +138,14 @@ export default function ClientPortalPage() {
           <div className="flex size-14 items-center justify-center rounded-2xl border border-brand/25 bg-brand/10">
             <LayoutDashboard className="text-brand" size={22} />
           </div>
-
           <h1 className="mt-6 text-4xl font-black tracking-tight">
             {isSpanish ? "Portal del cliente" : "Client portal"}
           </h1>
-
           <p className="mt-4 max-w-xl text-base leading-8 text-muted">
             {isSpanish
-              ? "Aquí validas si la suscripción está activa, si el onboarding quedó completo y qué plan está corriendo."
-              : "This is where you verify whether the subscription is active, whether onboarding is complete, and which plan is running."}
+              ? "Aquí validas si la suscripción está activa, administras facturación y puedes saltar directo a tu espacio de trabajo."
+              : "Use this to verify your subscription, manage billing, and jump directly into your workspace."}
           </p>
-
           <form className="mt-8 grid gap-4" onSubmit={handleSubmit}>
             <label className="grid gap-2">
               <span className="text-sm font-medium text-white/85">Email</span>
@@ -206,8 +199,16 @@ export default function ClientPortalPage() {
                   capitalize
                 />
                 <MetricCard
-                  label={isSpanish ? "Onboarding" : "Onboarding"}
-                  value={status.onboardingStatus}
+                  label={isSpanish ? "Setup negocio" : "Business setup"}
+                  value={
+                    status.onboardingStatus === "completed"
+                      ? isSpanish
+                        ? "guardado"
+                        : "saved"
+                      : isSpanish
+                        ? "opcional"
+                        : "optional"
+                  }
                   capitalize
                 />
                 <MetricCard
@@ -221,7 +222,6 @@ export default function ClientPortalPage() {
                   {status.companyName || status.customerName || status.email}
                 </div>
                 <div className="mt-2 text-muted">{status.email}</div>
-
                 <div className="mt-4 grid gap-3 md:grid-cols-2">
                   <div>
                     <div className="text-xs uppercase tracking-[0.18em] text-white/40">
@@ -229,14 +229,12 @@ export default function ClientPortalPage() {
                     </div>
                     <div className="mt-1">{status.serviceType || "—"}</div>
                   </div>
-
                   <div>
                     <div className="text-xs uppercase tracking-[0.18em] text-white/40">
                       {isSpanish ? "Área" : "Area"}
                     </div>
                     <div className="mt-1">{status.serviceArea || "—"}</div>
                   </div>
-
                   <div>
                     <div className="text-xs uppercase tracking-[0.18em] text-white/40">
                       Website
@@ -245,7 +243,6 @@ export default function ClientPortalPage() {
                       {status.website || "—"}
                     </div>
                   </div>
-
                   <div>
                     <div className="text-xs uppercase tracking-[0.18em] text-white/40">
                       {isSpanish ? "Lanzamiento" : "Launch"}
@@ -255,7 +252,6 @@ export default function ClientPortalPage() {
                     </div>
                   </div>
                 </div>
-
                 {status.goals && (
                   <div className="mt-4">
                     <div className="text-xs uppercase tracking-[0.18em] text-white/40">
@@ -269,11 +265,18 @@ export default function ClientPortalPage() {
               </div>
 
               <div className="flex flex-wrap gap-3">
+                <Link
+                  href={workspaceHref}
+                  className="inline-flex items-center gap-2 rounded-full bg-brand px-5 py-3 text-sm font-semibold text-white shadow-glow transition hover:-translate-y-1"
+                >
+                  {isSpanish ? "Abrir herramienta" : "Open workspace"}
+                  <ArrowRight size={16} />
+                </Link>
                 <button
                   type="button"
                   onClick={openBilling}
                   disabled={portalLoading}
-                  className="inline-flex items-center gap-2 rounded-full bg-brand px-5 py-3 text-sm font-semibold text-white shadow-glow transition hover:-translate-y-1 disabled:opacity-70"
+                  className="inline-flex items-center gap-2 rounded-full bg-brand/80 px-5 py-3 text-sm font-semibold text-white shadow-glow transition hover:-translate-y-1 disabled:opacity-70"
                 >
                   {portalLoading
                     ? isSpanish
@@ -283,22 +286,13 @@ export default function ClientPortalPage() {
                       ? "Administrar facturación"
                       : "Manage billing"}
                 </button>
-
-                {status.latestSessionId && (
-                  <Link
-                    href={onboardingHref}
-                    className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-1 hover:bg-white/[0.08]"
-                  >
-                    {status.onboardingStatus === "completed"
-                      ? isSpanish
-                        ? "Actualizar onboarding"
-                        : "Update onboarding"
-                      : isSpanish
-                        ? "Completar onboarding"
-                        : "Complete onboarding"}
-                    <ArrowRight size={16} />
-                  </Link>
-                )}
+                <Link
+                  href={onboardingHref}
+                  className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-1 hover:bg-white/[0.08]"
+                >
+                  {isSpanish ? "Configurar negocio" : "Business setup"}
+                  <ArrowRight size={16} />
+                </Link>
               </div>
             </div>
           ) : (
@@ -306,8 +300,8 @@ export default function ClientPortalPage() {
               <CheckCircle2 className="mx-auto text-brand" size={22} />
               <p className="mt-4">
                 {isSpanish
-                  ? "Busca tu email para ver si tu plan ya está activo y si el onboarding quedó cerrado."
-                  : "Look up your email to see whether your plan is active and whether onboarding is complete."}
+                  ? "Busca tu email para ver si tu plan ya está activo, abrir tu herramienta y administrar facturación."
+                  : "Look up your email to verify your plan, open your workspace, and manage billing."}
               </p>
             </div>
           )}

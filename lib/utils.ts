@@ -5,15 +5,25 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function formatPrice(amount: number, currency: "usd" | "mxn", locale: "en" | "es") {
+export function formatPrice(
+  amount: number,
+  currency: "usd" | "mxn",
+  locale: "en" | "es",
+) {
   const language = locale === "es" ? "es-MX" : "en-US";
   return new Intl.NumberFormat(language, {
     style: "currency",
     currency: currency.toUpperCase(),
-    maximumFractionDigits: 0
+    maximumFractionDigits: 0,
   }).format(amount);
 }
 
 export function getSiteUrl() {
-  return process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || "http://localhost:3000";
+  const fallback =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    process.env.URL ||
+    process.env.DEPLOY_PRIME_URL ||
+    "http://localhost:3000";
+
+  return fallback.replace(/\/$/, "");
 }

@@ -41,9 +41,9 @@ export async function POST(request: NextRequest) {
             recurring: { interval: "month" },
             product_data: {
               name: `Dexcore ${plan.title.en}`,
-              description: plan.description[body.locale]
-            }
-          }
+              description: plan.description[body.locale],
+            },
+          },
         },
         {
           quantity: 1,
@@ -55,32 +55,35 @@ export async function POST(request: NextRequest) {
               description:
                 body.locale === "es"
                   ? "Cargo único de implementación y configuración inicial."
-                  : "One-time implementation and launch configuration fee."
-            }
-          }
-        }
+                  : "One-time implementation and launch configuration fee.",
+            },
+          },
+        },
       ],
       metadata: {
         planId: plan.id,
         currency: body.currency,
         locale: body.locale,
-        setupFee: String(plan.setupFee[body.currency])
+        setupFee: String(plan.setupFee[body.currency]),
       },
       subscription_data: {
         metadata: {
           planId: plan.id,
           currency: body.currency,
           locale: body.locale,
-          dexcore_onboarding_status: "pending"
-        }
+          dexcore_onboarding_status: "pending",
+        },
       },
-      success_url: `${siteUrl}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${siteUrl}/cancel`
+      success_url: `${siteUrl}/workspace?session_id={CHECKOUT_SESSION_ID}&welcome=1`,
+      cancel_url: `${siteUrl}/cancel`,
     });
 
     return NextResponse.json({ url: session.url });
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Unable to create checkout session.";
+    const message =
+      error instanceof Error
+        ? error.message
+        : "Unable to create checkout session.";
     return NextResponse.json({ error: message }, { status: 500 });
   }
 }

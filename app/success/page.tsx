@@ -8,6 +8,7 @@ import {
   CheckCircle2,
   CreditCard,
   Sparkles,
+  Wrench,
 } from "lucide-react";
 import { useSitePreferences } from "@/components/providers/site-context";
 import { formatPrice } from "@/lib/utils";
@@ -22,6 +23,7 @@ type SessionSummary = {
   planId: string;
   planTitle: string;
   onboardingStatus: string;
+  latestSessionId?: string | null;
 };
 
 export default function SuccessPage() {
@@ -91,7 +93,12 @@ export default function SuccessPage() {
     };
   }, [paramsReady, sessionId]);
 
-  const onboardingHref = useMemo(() => {
+  const workspaceHref = useMemo(() => {
+    if (!sessionId) return "/workspace";
+    return `/workspace?session_id=${encodeURIComponent(sessionId)}`;
+  }, [sessionId]);
+
+  const setupHref = useMemo(() => {
     if (!sessionId) return "/onboarding";
     return `/onboarding?session_id=${encodeURIComponent(sessionId)}`;
   }, [sessionId]);
@@ -100,28 +107,18 @@ export default function SuccessPage() {
     <div className="mx-auto flex min-h-screen max-w-5xl items-center px-4 py-24 sm:px-6 lg:px-8">
       <div className="w-full rounded-[32px] border border-white/10 bg-white/[0.04] p-8 shadow-soft">
         <CheckCircle2 className="text-brand" size={44} />
-
         <h1 className="mt-6 text-4xl font-black tracking-tight">
           {isSpanish
-            ? "Pago recibido. Tu acceso ya está activo."
-            : "Payment received. Your access is already active."}
+            ? "Pago recibido. Tu herramienta ya está lista."
+            : "Payment received. Your tool is ready to use."}
         </h1>
-
         <p className="mt-4 max-w-2xl text-base leading-8 text-muted">
           {isSpanish
-            ? "Dexcore activó tu suscripción. El siguiente paso es completar tu onboarding para que la herramienta trabaje sola con tus datos reales."
-            : "Dexcore activated your subscription. Your next step is to complete onboarding so the system can run with your real business details."}
+            ? "Dexcore activó tu suscripción y desbloqueó tu espacio de trabajo. Puedes empezar a usar la herramienta ahora mismo. La configuración del negocio es opcional y la puedes completar después si quieres personalizarla más."
+            : "Dexcore activated your subscription and unlocked your workspace. You can start using the tool right now. Business setup is optional and can be completed later if you want more personalization."}
         </p>
 
-        {!loading && !sessionId && (
-          <div className="mt-6 rounded-[22px] border border-amber-400/20 bg-amber-400/10 p-4 text-sm text-amber-200">
-            {isSpanish
-              ? "No encontramos un session_id válido. Puedes volver al inicio o entrar desde el checkout/success para cargar tu resumen."
-              : "We could not find a valid session_id. You can return home or re-enter from the checkout/success flow to load your summary."}
-          </div>
-        )}
-
-        <div className="mt-8 grid gap-4 md:grid-cols-3">
+        <div className="mt-8 grid gap-4 md:grid-cols-4">
           <StatusCard
             icon={BadgeCheck}
             label={isSpanish ? "Estado" : "Status"}
@@ -133,7 +130,6 @@ export default function SuccessPage() {
                 : summary?.subscriptionStatus || "active"
             }
           />
-
           <StatusCard
             icon={CreditCard}
             label={isSpanish ? "Cobro inicial" : "Initial charge"}
@@ -149,18 +145,22 @@ export default function SuccessPage() {
                   : "Processed"
             }
           />
-
+          <StatusCard
+            icon={Wrench}
+            label={isSpanish ? "Espacio" : "Workspace"}
+            value={isSpanish ? "Activo" : "Active"}
+          />
           <StatusCard
             icon={Sparkles}
-            label={isSpanish ? "Onboarding" : "Onboarding"}
+            label={isSpanish ? "Setup negocio" : "Business setup"}
             value={
               summary?.onboardingStatus === "completed"
                 ? isSpanish
-                  ? "Completo"
-                  : "Complete"
+                  ? "Guardado"
+                  : "Saved"
                 : isSpanish
-                  ? "Pendiente"
-                  : "Pending"
+                  ? "Opcional"
+                  : "Optional"
             }
           />
         </div>
@@ -176,7 +176,6 @@ export default function SuccessPage() {
                   {summary.planTitle}
                 </div>
               </div>
-
               <div>
                 <div className="text-xs uppercase tracking-[0.2em] text-white/40">
                   Email
@@ -186,7 +185,6 @@ export default function SuccessPage() {
                 </div>
               </div>
             </div>
-
             {summary.customerName && (
               <p className="mt-4 text-sm text-muted">{summary.customerName}</p>
             )}
@@ -197,26 +195,20 @@ export default function SuccessPage() {
 
         <div className="mt-8 flex flex-wrap gap-4">
           <Link
-            href={onboardingHref}
+            href={workspaceHref}
             className="inline-flex items-center gap-2 rounded-full bg-brand px-6 py-4 text-sm font-semibold text-white shadow-glow transition hover:-translate-y-1"
           >
-            {summary?.onboardingStatus === "completed"
-              ? isSpanish
-                ? "Actualizar onboarding"
-                : "Update onboarding"
-              : isSpanish
-                ? "Completar onboarding"
-                : "Complete onboarding"}
+            {isSpanish ? "Abrir herramienta" : "Open workspace"}
             <ArrowRight size={16} />
           </Link>
-
           <Link
-            href="/portal"
+            href={setupHref}
             className="rounded-full border border-white/10 bg-white/[0.03] px-6 py-4 text-sm font-semibold text-white transition hover:-translate-y-1 hover:bg-white/[0.08]"
           >
-            {isSpanish ? "Portal del cliente" : "Client portal"}
+            {isSpanish
+              ? "Configurar negocio (opcional)"
+              : "Business setup (optional)"}
           </Link>
-
           <Link
             href="/billing"
             className="rounded-full border border-white/10 bg-white/[0.03] px-6 py-4 text-sm font-semibold text-white transition hover:-translate-y-1 hover:bg-white/[0.08]"
