@@ -15,8 +15,8 @@ export type Plan = {
 export const plans: Plan[] = [
   {
     id: "starter",
-    prices: { usd: 19, mxn: 399 },
-    setupFee: { usd: 19, mxn: 399 },
+    prices: { usd: 1.99, mxn: 39 },
+    setupFee: { usd: 1.99, mxn: 39 },
     title: { en: "Starter", es: "Starter" },
     description: {
       en: "Best entry plan to start using Dexcore with the core workspace.",
