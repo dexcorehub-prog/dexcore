@@ -19,27 +19,27 @@ export const plans: Plan[] = [
     setupFee: { usd: 19, mxn: 399 },
     title: { en: "Starter", es: "Starter" },
     description: {
-      en: "For local businesses that need a cleaner lead flow fast.",
-      es: "Para negocios locales que necesitan un flujo de leads más limpio rápido."
+      en: "Best entry plan to start using Dexcore with the core workspace.",
+      es: "El mejor plan de entrada para empezar a usar Dexcore con el workspace base.",
     },
     features: {
       en: [
-        "Premium landing page",
-        "Contact + qualification form",
-        "Basic automation flows",
-        "USD / MXN pricing support",
-        "Cookie consent + legal pages",
-        "Email lead notifications"
+        "Dexcore workspace access",
+        "Lead pipeline",
+        "Fast quote builder",
+        "Follow-up message generator",
+        "Bilingual interface (EN/ES)",
+        "USD / MXN pricing switch",
       ],
       es: [
-        "Landing page premium",
-        "Formulario de contacto y calificación",
-        "Automatizaciones básicas",
-        "Soporte de precios en USD / MXN",
-        "Cookies + páginas legales",
-        "Notificaciones por email"
-      ]
-    }
+        "Acceso al workspace de Dexcore",
+        "Pipeline de leads",
+        "Cotizador rápido",
+        "Generador de seguimiento",
+        "Interfaz bilingüe (EN/ES)",
+        "Cambio de moneda USD / MXN",
+      ],
+    },
   },
   {
     id: "growth",
@@ -49,27 +49,27 @@ export const plans: Plan[] = [
     setupFee: { usd: 39, mxn: 799 },
     title: { en: "Growth", es: "Growth" },
     description: {
-      en: "For service businesses that want stronger qualification and follow-up.",
-      es: "Para negocios de servicios que quieren mejor calificación y seguimiento."
+      en: "Recommended launch plan for operators who want the full core flow with billing access.",
+      es: "Plan recomendado de lanzamiento para operadores que quieren el flujo central completo con acceso a facturación.",
     },
     features: {
       en: [
         "Everything in Starter",
         "Stripe subscription checkout",
         "Billing portal access",
-        "Enhanced conversion sections",
-        "Professional motion system",
-        "SEO + schema markup + sitemap"
+        "Client portal access",
+        "Launch-ready autoservice flow",
+        "Best fit for daily use",
       ],
       es: [
         "Todo lo de Starter",
         "Checkout de suscripción con Stripe",
-        "Acceso a portal de facturación",
-        "Secciones de conversión mejoradas",
-        "Sistema de animaciones profesional",
-        "SEO + schema markup + sitemap"
-      ]
-    }
+        "Acceso al portal de facturación",
+        "Acceso al portal del cliente",
+        "Flujo autoservicio listo para lanzamiento",
+        "La mejor opción para uso diario",
+      ],
+    },
   },
   {
     id: "pro",
@@ -77,28 +77,28 @@ export const plans: Plan[] = [
     setupFee: { usd: 59, mxn: 1199 },
     title: { en: "Pro", es: "Pro" },
     description: {
-      en: "For operators who want a premium conversion engine and room to expand.",
-      es: "Para operadores que quieren una máquina premium de conversión con espacio para crecer."
+      en: "Best for businesses that want the full Dexcore system plus higher-touch rollout support.",
+      es: "Ideal para negocios que quieren el sistema completo de Dexcore más apoyo de rollout de mayor nivel.",
     },
     features: {
       en: [
         "Everything in Growth",
-        "Advanced onboarding copy",
-        "Priority design support",
-        "Regional MX / US messaging",
-        "Launch checklist included",
-        "Scaffold ready for CRM and dashboards"
+        "Priority rollout support",
+        "Help adapting Dexcore to your niche",
+        "More guided launch assistance",
+        "Best fit for teams wanting a stronger setup",
+        "Built for more serious operators",
       ],
       es: [
         "Todo lo de Growth",
-        "Copy avanzado de onboarding",
-        "Soporte de diseño prioritario",
-        "Mensajería regional MX / US",
-        "Checklist de lanzamiento incluido",
-        "Base lista para CRM y dashboards"
-      ]
-    }
-  }
+        "Soporte prioritario de rollout",
+        "Ayuda para adaptar Dexcore a tu nicho",
+        "Más acompañamiento de lanzamiento",
+        "Ideal para equipos que quieren una mejor implementación",
+        "Hecho para operadores más serios",
+      ],
+    },
+  },
 ];
 
 export function getPlanById(planId: string) {
